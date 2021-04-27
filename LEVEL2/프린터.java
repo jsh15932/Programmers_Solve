@@ -1,27 +1,37 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 class Solution {
+    public class Printer {
+        int location;
+        int prior;
+        
+        Printer(int location, int prior) {
+            this.location = location;
+            this.prior = prior;
+        }
+    }
+    
     public int solution(int[] priorities, int location) {
         int answer = 0;
         Queue<Printer> que = new LinkedList<>();
         
         for(int i = 0; i < priorities.length; i++) {
-            que.add(new Printer(i, priorities[i]));
+            que.offer(new Printer(i, priorities[i]));
         }
         
-        while(!que.isEmpty()) {
+        while(que.size() != 0) {
             boolean chk = false;
-            int x = que.peek().priority;
+            int cur = que.peek().prior;
             
             for(Printer p : que) {
-                if(x < p.priority) {
+                if(cur < p.prior) {
                     chk = true;
                 }
             }
             
             if(chk) {
-                que.add(que.poll());
+                que.offer(que.poll());
             }
             
             else {
@@ -32,15 +42,5 @@ class Solution {
         }
         
         return answer;
-    }
-    
-    class Printer {
-        int location;
-        int priority;
-        
-        Printer(int location, int priority) {
-            this.location = location;
-            this.priority = priority;
-        }
     }
 }
