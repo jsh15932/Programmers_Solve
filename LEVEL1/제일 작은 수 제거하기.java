@@ -6,29 +6,29 @@ class Solution {
         if(arr.length == 1) {
             answer = new int[1];
             answer[0] = -1;
+            
+            return answer;
         }
         
-        else {
-            for(int i = 0; i < arr.length; i++) {
-                if(arr[i] < min) {
-                    min = arr[i];
-                }
+        for(int i = 0; i < arr.length; i++) {
+            if(arr[i] < min) {
+                min = arr[i];
             }
-        
-            answer = new int[arr.length - 1];
-            int idx = 0;
+        }
 
-            for(int i = 0; i < answer.length; i++) {
-                if(arr[idx] == min) {
-                    idx++;
-                    i--;
+        answer = new int[arr.length - 1];
+        int idx = 0;
 
-                    continue;
-                }
-
-                answer[i] = arr[idx];
+        for(int i = 0; i < answer.length; i++) {
+            if(arr[idx] == min) {
                 idx++;
+                i--;
+
+                continue;
             }
+
+            answer[i] = arr[idx];
+            idx++;
         }
         
         return answer;
