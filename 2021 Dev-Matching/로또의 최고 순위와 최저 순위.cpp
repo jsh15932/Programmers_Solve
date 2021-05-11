@@ -1,5 +1,6 @@
 #include<string>
 #include<vector>
+
 using namespace std;
 
 vector<int> solution(vector<int> lottos, vector<int> win_nums) {
@@ -11,8 +12,6 @@ vector<int> solution(vector<int> lottos, vector<int> win_nums) {
         for(int j = 0; j < lottos.size(); j++) {
             if(lottos.at(j) == win_nums.at(i)) {
                 min_N += 1;
-                
-                break;
             }
         }
     }
