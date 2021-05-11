@@ -1,44 +1,34 @@
 #include<string>
-#include<set>
 #include<vector>
 using namespace std;
 
 vector<int> solution(vector<int> lottos, vector<int> win_nums) {
     vector<int> answer;
-    set<int> win_num;
+    int rank[7] = {6, 6, 5, 4, 3, 2, 1};
+    int min_N = 0;
     
-    for(int i = 0; i < 6; i++) {
-        win_num.insert(win_nums[i]);
-    }
-    
-    int k = 0;
-    int match = 0;
-    
-    for(int i = 0; i < 6; i++) {
-        if(lottos[i] == 0) {
-            k++;
-        }
-        
-        else if(win_num.find(lottos[i]) != win_num.end()) {
-            match++;
+    for(int i = 0; i < win_nums.size(); i++) {
+        for(int j = 0; j < lottos.size(); j++) {
+            if(lottos.at(j) == win_nums.at(i)) {
+                min_N += 1;
+                
+                break;
+            }
         }
     }
     
-    if(k + match == 1 || k + match == 0) {
-        answer.push_back(6);
-    }
-        
-    else {
-        answer.push_back(7 - (k + match));
+    int zero = 0;
+    
+    for(int i = 0; i < lottos.size(); i++) {
+        if(lottos.at(i) == 0) {
+            zero += 1;
+        }
     }
     
-    if(match == 1 || match == 0) {
-        answer.push_back(6);
-    }
+    int max_N = min_N + zero;
     
-    else {
-        answer.push_back(7 - match);
-    }
+    answer.push_back(rank[max_N]);
+    answer.push_back(rank[min_N]);
     
     return answer;
 }
