@@ -6,7 +6,7 @@ class Solution {
             }
         }
             
-            return true;
+        return true;
     }
     
     public int solution(int[] nums) {
