@@ -1,7 +1,4 @@
-#include<string>
-#include<vector>
-#include<queue>
-#include<algorithm>
+#include<bits/stdc++.h>
 using namespace std;
 
 int solution(int n, vector<vector<int>> edge) {
@@ -27,7 +24,7 @@ int solution(int n, vector<vector<int>> edge) {
         que.pop();
         
         for(int i = 2; i <= n; i++) {
-            if(chk[cur][i] == true && visited[i] == false) {
+            if(chk[cur][i] && !visited[i]) {
                 que.push(i);
                 visited[i] = true;
                 d[i] = d[cur] + 1;
