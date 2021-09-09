@@ -2,74 +2,62 @@
 #include<vector>
 using namespace std;
 
-bool chk_1(char c) {
-    return 'a' <= c && c <= 'z';
-}
-
-bool chk_2(char c) {
-    return 'A' <= c && c <= 'Z';
-}
-
-bool chk_3(char c) {
-    return '0' <= c && c <= '9';
-}
-
 string solution(string new_id) {
-    string answer = "";
-    string s = new_id;
-    
-    for(int i = 0; i < s.length(); i++) {
-        if(chk_2(s[i])) {
-            s[i] = s[i] - 'A' + 'a';
+    for(int i = 0; i < new_id.length(); i++) {
+        if(new_id[i] >= 'A' && new_id[i] <= 'Z') {
+            new_id[i] = new_id[i] - 'A' + 'a';
         }
     }
     
-    string s2;
-    
-    for(int i = 0; i < s.length(); i++) {
-        if(chk_1(s[i]) || chk_3(s[i]) || s[i] == '-' || s[i] == '_' || s[i] == '.') {
-            s2 += s[i];
-        }
-    }
-    
-    bool chk_4 = false;
-    
-    for(int i = 0; i < s2.length(); i++) {
-        if(s2[i] == '.' && chk_4) {
+    for(int i = 0; i < new_id.length();) {
+        if((new_id[i] >= 'a' && new_id[i] <= 'z') || (new_id[i] >= '0' && new_id[i] <= '9') || new_id[i] == '-' || new_id[i] == '_' || new_id[i] == '.') {
+            i++;
+            
             continue;
         }
         
-        answer += s2[i];
-        chk_4 = s2[i] == '.';
+        new_id.erase(new_id.begin() + i);
     }
     
-    if(!answer.empty() && answer.front() == '.') {
-        answer = answer.substr(1);
-    }
-    
-    if(!answer.empty() && answer.back() == '.') {
-        answer.pop_back();
-    }
-    
-    if(answer.empty()) {
-        answer += 'a';
-    }
-    
-    if(answer.size() >= 16) {
-        answer = answer.substr(0, 15);
+    for(int i = 1; i < new_id.length();) {
+        if(new_id[i - 1] == '.' && new_id[i] == '.') {
+            new_id.erase(new_id.begin() + i);
+            
+            continue;
+        }
         
-        if(answer.back() == '.') {
-            answer.pop_back();
+        else {
+            i++;
         }
     }
     
-    if(answer.size() == 1) {
-        answer = answer + answer + answer;
+    if(new_id.front() == '.') {
+        new_id.erase(new_id.begin());
     }
     
-    else if(answer.size() == 2) {
-        answer += answer.back();
+    if(new_id.back() == '.') {
+        new_id.erase(new_id.end() - 1);
     }
     
-    return answer;
+    if(new_id.length() == 0) {
+        new_id = "a";
+    }
+    
+    if(new_id.length() > 15) {
+        while(new_id.length() != 15) {
+            new_id.erase(new_id.begin() + 15);
+        }
+    }
+    
+    if(new_id.back() == '.') {
+        new_id.erase(new_id.end() - 1);
+    }
+    
+    if(new_id.length() < 3) {
+        while(new_id.length() != 3) {
+            new_id += new_id.back();
+        }
+    }
+    
+    return new_id;
 }
