@@ -1,5 +1,4 @@
-#include<string>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 int solution(int n, vector<vector<int>> results) {
@@ -12,11 +11,11 @@ int solution(int n, vector<vector<int>> results) {
         chk[win][lose] = true;
     }
     
-    for(int i = 1; i <= n; i++) {
-        for(int j = 1; j <= n; j++) {
-            for(int k = 1; k <= n; k++) {
-                if(chk[j][i] && chk[i][k]) {
-                    chk[j][k] = true;
+    for(int via = 1; via <= n; via++) {
+        for(int from = 1; from <= n; from++) {
+            for(int to = 1; to <= n; to++) {
+                if(chk[from][via] && chk[via][to]) {
+                    chk[from][to] = true;
                 }
             }
         }

@@ -1,59 +1,48 @@
-#include<string>
-#include<algorithm>
-#include<queue>
-#include<map>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 vector<int> solution(vector<string> gems) {
-    vector<int> answer;
-    queue<string> que;
+    vector<int> answer = {1, (int)gems.size()};
+    int start = 0, end = 0;
+    int dis = gems.size() - 1;
     map<string, int> mp;
-    int gems_size = 0;
-    int start = 0;
-    int end = 100001;
-    int tmp = 0;
+    int total;
     
-    for(auto i : gems) {
-        mp[i] = 1;
+    for(string i : gems) {
+        mp[i]++;
     }
     
-    gems_size = mp.size();
+    total = mp.size();
     mp.clear();
     
-    for(int i = 0; i < gems.size(); i++) {
-        if(mp[gems[i]] == 0) {
-            mp[gems[i]] = 1;
-        }
-        
-        else {
-            mp[gems[i]] += 1;
-        }
-        
-        que.push(gems[i]);
-        
-        while(1) {
-            if(mp[que.front()] > 1) {
-                mp[que.front()] -= 1;
-                que.pop();
-                tmp++;
+    while(1) {
+        if(mp.size() == total) {
+            if(end - start < dis) {
+                dis = end - start;
+                answer[0] = start + 1;
+                answer[1] = end;
+            }
+            
+            if(mp[gems[start]] == 1) {
+                mp.erase(gems[start]);
+                start++;
             }
             
             else {
-                break;
+                mp[gems[start]]--;
+                start++;
             }
         }
         
-        if(mp.size() == gems_size && que.size() < end) {
-            end = que.size();
-            start = tmp;
+        else if(end == gems.size()) {
+            break;
+        }
+        
+        else {
+            mp[gems[end]]++;
+            end++;
         }
     }
-    
-    answer = {0, 0};
-    
-    answer[0] = start + 1;
-    answer[1] = start + end;
     
     return answer;
 }
