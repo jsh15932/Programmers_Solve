@@ -1,45 +1,44 @@
-#include<string>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
 
-int answer = 100;
-string s;
-bool check[51];
-
-void dfs(string begin, vector<string>& words, int result) {
-    if(s == begin) {
-        answer = min(answer, result);
-        return;
-    }
+int solution(string begin, string target, vector<string> words) {
+    int answer = 0;
+    int w = words.size();
+    int b = begin.size();
+    vector<int> chk(w, 0);
+    queue<pair<string, int>> que;
+    int d;
     
-    for(int i = 0; i < words.size(); i++) {
-        int count = 0;
-        for(int j = 0; j < words[i].size(); j++) {
-            if(begin[j] != words[i][j]) {
-                count++;
+    que.push({ begin, 0 });
+    
+    while(!que.empty()) {
+        string start = que.front().first;
+        int cnt = que.front().second;
+        
+        que.pop();
+        
+        for(int i = 0; i < w; i++) {
+            d = 0;
+            
+            if(chk[i] != 0) {
+                continue;
             }
             
-            if(count == 2) {
-                break;
+            for(int j = 0; j < b; j++) {
+                if(start[j] != words[i][j]) {
+                    d++;
+                }
+            }
+            
+            if(d == 1) {
+                if(words[i] == target) {
+                    return cnt + 1;
+                }
+                
+                chk[i] = 1;
+                que.push({ words[i], cnt + 1});
             }
         }
-        
-        if(count == 1) {
-            if(check[i] == false) {
-                check[i] = true;
-                dfs(words[i], words, result + 1);
-                check[i] = false;
-            }
-        }    
-    }
-}
-
-int solution(string begin, string target, vector<string> words) {
-    s = target;
-    dfs(begin, words, 0);
-    
-    if(answer == 100) {
-        answer = 0;
     }
     
     return answer;
