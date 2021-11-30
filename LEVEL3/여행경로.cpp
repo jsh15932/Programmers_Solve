@@ -1,37 +1,51 @@
-#include<string>
-#include<algorithm>
-#include<vector>
+#include <string>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-int max_N = 0;
-
-void DFS(string start, vector<vector<string>>& tickets, vector<bool>& visit, vector<string>& answer, vector<string>& tmp, int cnt) {
-    tmp.push_back(start);
+bool dfs(vector<vector<string>> &tickets, vector<string> &vc, vector<bool> &visited, string next) {
+    vc.push_back(next);
     
-    if(cnt > max_N) {
-        max_N = cnt;
-        answer = tmp;
+    if(vc.size() == tickets.size() + 1) {
+        return true;
     }
     
     for(int i = 0; i < tickets.size(); i++) {
-        if(start == tickets[i][0] && !visit[i]) {
-            visit[i] = true;
-            DFS(tickets[i][1], tickets, visit, answer, tmp, cnt + 1);
-            visit[i] = false;
+        if(!visited[i] && tickets[i][0] == next) {
+            visited[i] = true;
+            
+            if(dfs(tickets, vc, visited, tickets[i][1])) {
+                return true;
+            }
+            
+            visited[i] = false;
         }
     }
     
-    tmp.pop_back();
+    vc.pop_back();
+    
+    return false;
 }
 
 vector<string> solution(vector<vector<string>> tickets) {
-    vector<string> answer, tmp;
-    vector<bool> visit(tickets.size(), false);
-    int cnt = 0;
-    
+    vector<string> answer;
     sort(tickets.begin(), tickets.end());
     
-    DFS("ICN", tickets, visit, answer, tmp, cnt);
+    for(int i = 0; i < tickets.size(); i++) {
+        vector<bool> visited(tickets.size(), false);
+        vector<string> vc;
+        
+        if(tickets[i][0] == "ICN") {
+            visited[i] = true;
+            vc.push_back("ICN");
+            
+            if(dfs(tickets, vc, visited, tickets[i][1])) {
+                answer = vc;
+                
+                break;
+            }
+        }
+    }
     
     return answer;
 }

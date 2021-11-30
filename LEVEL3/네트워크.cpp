@@ -1,13 +1,14 @@
-#include<string>
-#include<vector>
+#include <string>
+#include <vector>
+
 using namespace std;
 
-void dfs(int node, vector<vector<int>> &vc, vector<bool> &visited, int n) {
+void dfs(int node, vector<vector<int>> &computers, vector<bool> &visited, int n) {
     visited[node] = true;
     
     for(int i = 0; i < n; i++) {
-        if(!visited[i] && vc[node][i]) {
-            dfs(i, vc, visited, n);
+        if(!visited[i] && computers[node][i]) {
+            dfs(i, computers, visited, n);
         }
     }
 }
