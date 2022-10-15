@@ -17,7 +17,7 @@ int solution(vector<int> sticker)
 
     arr1[0] = sticker[0];
     arr1[1] = sticker[0];
-    arr2[2] = 0;
+    arr2[0] = 0;
     arr2[1] = sticker[1];
 
     for(int i = 2; i < sticker.size() - 1; i++) {
