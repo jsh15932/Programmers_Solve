@@ -1,6 +1,4 @@
-#include<string>
-#include<algorithm>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 int arr[101];
@@ -31,10 +29,12 @@ int solution(int n, vector<vector<int>> costs) {
         int end = getParent(costs[i][1]);
         int cost = costs[i][2];
         
-        if(start != end) {
-            answer += cost;
-            arr[end] = start;
+        if(start == end) {
+            continue;
         }
+        
+        answer += cost;
+        arr[end] = start;
     }
     
     return answer;
