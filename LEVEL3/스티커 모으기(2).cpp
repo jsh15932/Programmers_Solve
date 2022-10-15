@@ -1,18 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int arr1[100001], arr2[100001];
+
 int solution(vector<int> sticker)
 {
     int answer = 0;
 
     if(sticker.size() <= 3) {
+        int res = 0;
         for(int i = 0; i < sticker.size(); i++) {
-            answer = max(answer, sticker[i]);
+            res = max(res, sticker[i]);
         }
-        return answer;
+        return res;
     }
-
-    int arr1[sticker.size()], arr2[sticker.size()];
 
     arr1[0] = sticker[0];
     arr1[1] = sticker[0];
