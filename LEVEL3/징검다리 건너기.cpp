@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-int maxN = 200000000;
+#define maxN 200000000
 
 int solution(vector<int> stones, int k) {
     int answer = 0;
