@@ -16,7 +16,7 @@ def solution(board):
             for i in range(4):
                 nextX = x + dx[i]
                 nextY = y + dy[i]
-                if nextX >= 0 and nextY >= 0 and nextX <= maxN and nextY <= maxN and board[nextX][nextY] != 1:
+                if nextX >= 0 and nextY >= 0 and nextX <= maxN and nextY <= maxN and board[nextX][nextY] == 0:
                     if d == i:
                         nextC = c + 100
                     else:
