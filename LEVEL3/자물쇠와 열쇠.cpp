@@ -66,4 +66,4 @@ bool solution(vector<vector<int>> key, vector<vector<int>> lock) {
     }
 
     return answer;
-}
+} 
