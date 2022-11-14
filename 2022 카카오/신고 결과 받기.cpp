@@ -1,33 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-map<string, int> cnt;
-map<string, set<string>> mp;
-
 vector<int> solution(vector<string> id_list, vector<string> report, int k) {
-    vector<int> answer;
+    int len = id_list.size();
+    vector<int> answer(len);
+    unordered_map<string, unordered_set<string>> mp1;
+    unordered_map<string, unordered_set<string>> mp2;
     
-    for(string s:report) {
-        int m = s.find(' ');
-        string from = s.substr(0, m);
-        string to = s.substr(m);
-        
-        if(mp[from].find(to) == mp[from].end()) {
-            cnt[to]++;
-            mp[from].insert(to);
-        }
+    for(string s : report) {
+        int blank = s.find(' ');
+        string from = s.substr(0, blank);
+        string to = s.substr(blank + 1);
+        mp1[from].insert(to);
+        mp2[to].insert(from);
     }
     
-    for(string s:id_list) {
-        int res = 0;
+    for(int i = 0; i < len; i++) {
+        string from = id_list[i];
+        auto it = mp1.find(from);
         
-        for(string str:mp[s]) {
-            if(cnt[str] >= k) {
-                res++;
-            }
+        if(it == mp1.end()) {
+            continue;
         }
         
-        answer.push_back(res);
+        for(string s : it -> second) {
+            if(mp2[s].size() >= k) {
+                answer[i]++;
+            }
+        }
     }
     
     return answer;
