@@ -1,50 +1,45 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-int arr[20001];
+#define INF 1e9
 
 int solution(vector<string> strs, string t)
 {
-    int answer = 0;
-
-    for(int i = 0 ; i < t.size(); i++) {
-        int idx = i;
-        char c = t[i];
-        arr[idx] = t.size() + 1;
-        
+    int answer = -1;
+    int arr[20001];
+    bool chk = true;
+    
+    for(int i = 1; i <= t.length(); i++) {
+        arr[i] = INF;
+    }
+    
+    for(int i = 1; i <= t.length(); i++) {
         for(int j = 0; j < strs.size(); j++) {
-            bool chk = true;
-            int len = strs[j].size() - 1;
+            int prevIdx = i - strs[j].length();
             
-            if(strs[j][len] == c) {
-                for(int k = 0; k <= len; k++) {
-                    if(t[idx - k] != strs[j][len - k]) {
-                        chk = false;
-                        
-                        break;
-                    }
+            if(prevIdx < 0) {
+                continue;   
+            }
+            
+            chk = true;
+
+            for(int k = 0; k < strs[j].length(); k++) {
+                if(t[prevIdx + k] != strs[j][k]) {
+                    chk = false;
+                    break;
                 }
-                
-                if(chk) {
-                    if(idx - len - 1 == -1) {
-                        arr[idx] = 1;
-                    }
-                    
-                    else {
-                        if(arr[idx - len - 1] + 1 < arr[idx]) {
-                            arr[idx] = arr[idx - len - 1] + 1;
-                        }
-                    }
-                }
+            }
+
+            if(chk) {
+                arr[i] = min(arr[i], arr[prevIdx] + 1);
             }
         }
     }
     
-    answer = arr[t.size() - 1];
+    answer = arr[t.length()];
     
-    if(answer >= t.size() + 1) {
-        answer = -1;
+    if(answer == INF) {
+        return -1;
     }
-    
+
     return answer;
 }
